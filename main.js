@@ -6,10 +6,29 @@ const app = express()
 const PORT = process.env.PORT || 4000
 
 // database connection
-mongoose.connect(process.env.DB_URL, {useNewParser: true})
-const db = mongoose.connection()
+mongoose.connect(process.env.DB_URL)
+const db = mongoose.connection
 db.on('error',(error)=>console.log(error))
 db.once('open',()=>console.log('Connected to the database'))
+
+// middlewares
+app.use(express.urlencoded({extended: false}))
+app.use(express.json())
+
+app.use(session({
+    secret:"my secret key",
+    saveUninitialized:true,
+    resave:false
+}))
+
+app.use((req,res,next)=>{
+    res.locals.message = req.session.message
+    delete req.session.message
+    next()
+})
+
+app.set('view engine','ejs')
+
 
 
 app.get('/',(req,res)=>{
