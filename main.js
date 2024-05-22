@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
+const session = require('express-session')
 
 const app = express()
 const PORT = process.env.PORT || 4000
@@ -33,11 +34,8 @@ app.use((req,res,next)=>{
 // set view engine
 app.set('view engine','ejs')
 
-
-
-app.get('/',(req,res)=>{
-    res.send('Hello')
-})
+// route prefix
+app.use("", require('./routes/routes'))
 
 app.listen(PORT, ()=>{console.log("Server started http://localhost:"+PORT)})
 
