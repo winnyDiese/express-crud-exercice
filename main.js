@@ -5,11 +5,13 @@ const mongoose = require('mongoose')
 const app = express()
 const PORT = process.env.PORT || 4000
 
+
 // database connection
 mongoose.connect(process.env.DB_URL)
 const db = mongoose.connection
 db.on('error',(error)=>console.log(error))
 db.once('open',()=>console.log('Connected to the database'))
+
 
 // middlewares
 app.use(express.urlencoded({extended: false}))
@@ -27,6 +29,8 @@ app.use((req,res,next)=>{
     next()
 })
 
+
+// set view engine
 app.set('view engine','ejs')
 
 
