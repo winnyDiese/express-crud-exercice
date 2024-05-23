@@ -8,8 +8,13 @@ const multer = require('multer')
 var storage = multer.diskStorage({
     destination: function(req,file,cb){
         cb(null,'./uploads')
+    },
+    filemane: function(req,file,cb){
+        cb(null,file.fieldname+"_"+DataTransfer.now()+"_"+file.originalname)
     }
 })
+
+
 
 router.get('/',(req,res)=>{
     // res.send('Home page...')
