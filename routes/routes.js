@@ -1,6 +1,15 @@
 
 const express = require('express')
 const router = express.Router()
+const User = require('../models/users')
+const multer = require('multer')
+
+// Image upload
+var storage = multer.diskStorage({
+    destination: function(req,file,cb){
+        cb(null,'./uploads')
+    }
+})
 
 router.get('/',(req,res)=>{
     // res.send('Home page...')
