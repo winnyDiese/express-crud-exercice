@@ -14,6 +14,27 @@ var storage = multer.diskStorage({
     }
 })
 
+var upload = multer({
+    storage:storage,
+}).single('image')
+
+// Insert an user into database route
+router.post('/add', upload, (req,res)=>{
+    const user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        image: req.file.filemane
+    })
+    user.save(err=>{
+        if(err){
+            res.json({message: err.message, type:'danger'})
+        }else{
+            res.session.message
+        }
+    })
+})
+
 
 
 router.get('/',(req,res)=>{
